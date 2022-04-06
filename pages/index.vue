@@ -6,6 +6,16 @@
       >
         <h5>Task</h5>
         <div class="d-flex align-items-center ms-auto">
+          <div>
+            <b-dropdown id="dropdown-1" text="Category" class="m-md-2">
+              <b-dropdown-item
+                v-for="(item, i) in resultCategory"
+                :key="i"
+                @click="cat = item"
+                >{{ item }}</b-dropdown-item
+              >
+            </b-dropdown>
+          </div>
           <!-- /* Form input pencarian */ -->
           <input
             type="text"
@@ -88,41 +98,50 @@ export default {
           title: "Task 1",
           description: "ini deskripsi task 1",
           isDone: false,
+          category: "Daily",
         },
         {
           title: "Task 2",
           description: "ini deskripsi 2",
           isDone: false,
+          category: "BiWeekly",
         },
         {
           title: "Task 3",
           description: " ini deskripsi 3",
           isDone: false,
+          category: "Daily",
         },
         {
           title: "Task 4",
-          description: "ini deskripsi task 1",
+          description: "ini deskripsi task 4",
           isDone: false,
+          category: "BiWeekly",
         },
         {
           title: "Task 5",
-          description: "ini deskripsi 2",
+          description: "ini deskripsi 5",
           isDone: false,
+          category: "Weekly",
         },
         {
           title: "Task 6",
-          description: " ini deskripsi 3",
+          description: " ini deskripsi 6",
           isDone: false,
+          category: "Daily",
         },
       ],
       //status saat menambah task
       isCreating: false,
       // Tipe layout daftar task
       isGrid: false,
+      cat: "",
     };
   },
   computed: {
     resultQuery() {
+      if (this.cat != "")
+        return this.tasks.filter((i) => i.category == this.cat);
       if (this.searchQuery) {
         return this.tasks.filter((i) => {
           return this.searchQuery
@@ -134,6 +153,14 @@ export default {
         console.log(this.tasks);
         return this.tasks;
       }
+    },
+
+    resultCategory() {
+      let a = this.tasks
+        .map((item) => item.category)
+        .filter((value, index, self) => self.indexOf(value) === index);
+      console.log(a);
+      return a;
     },
   },
   methods: {},

@@ -19,7 +19,10 @@
         task.isDone ? 'text-decoration-line-through fst-italic' : '',
       ]"
     >
-      <div class="title-task mb-1">{{ task.title }}</div>
+      <div class="title-task mb-1">
+        {{ task.title }}
+        <span class="badge bg-success">{{ task.category }}</span>
+      </div>
       <div class="description-task small text-muted">
         {{ task.description }}
       </div>
@@ -35,6 +38,7 @@ export default {
         title: "Untitled",
         description: " Undescribe",
         isDone: false,
+        category: "",
       },
     },
     isGrid: {
