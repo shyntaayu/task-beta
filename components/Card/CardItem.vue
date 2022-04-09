@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="!task.isDone || isShow"
     :class="[
       'item-task d-flex align-items-start border-bottom pt-3 pb-4',
       isGrid ? 'col-12 col-md-6 col-lg-4' : 'col-12',
@@ -46,6 +47,7 @@ export default {
       required: true,
       default: false,
     },
+    isShow: false,
   },
 };
 </script>

@@ -12,10 +12,13 @@
                 v-for="(item, i) in resultCategory"
                 :key="i"
                 @click="cat = item"
-                >{{ item }}</b-dropdown-item
+                >{{ item == "" ? "Nothing selected" : item }}</b-dropdown-item
               >
             </b-dropdown>
           </div>
+          <button class="btn btn-primary" @click="isShow = !isShow">
+            {{ !isShow ? "Show" : "Hide" }}
+          </button>
           <!-- /* Form input pencarian */ -->
           <input
             type="text"
@@ -23,6 +26,7 @@
             placeholder="Search"
             v-model="searchQuery"
           />
+
           <div class="d-flex align-items-center justify-content-end w-100">
             <span class="me-2">View As</span>
             <button
@@ -41,6 +45,7 @@
           :key="i"
           :task="item"
           :isGrid="isGrid"
+          :isShow="isShow"
         />
       </div>
 
@@ -135,13 +140,15 @@ export default {
       isCreating: false,
       // Tipe layout daftar task
       isGrid: false,
-      cat: "",
+      cat: "Nothing selected",
+      isShow: true,
     };
   },
   computed: {
     resultQuery() {
-      if (this.cat != "")
+      if (this.cat != "Nothing selected")
         return this.tasks.filter((i) => i.category == this.cat);
+      else if (this.cat == "Nothing selected") return this.tasks;
       if (this.searchQuery) {
         return this.tasks.filter((i) => {
           return this.searchQuery
@@ -159,6 +166,7 @@ export default {
       let a = this.tasks
         .map((item) => item.category)
         .filter((value, index, self) => self.indexOf(value) === index);
+      a.push("Nothing selected");
       console.log(a);
       return a;
     },
