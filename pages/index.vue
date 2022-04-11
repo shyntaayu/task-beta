@@ -16,7 +16,7 @@
               >
             </b-dropdown>
           </div>
-          <button class="btn btn-primary" @click="isShow = !isShow">
+          <button class="btn btn-danger me-2" @click="isShow = !isShow">
             {{ !isShow ? "Show" : "Hide" }}
           </button>
           <!-- /* Form input pencarian */ -->
