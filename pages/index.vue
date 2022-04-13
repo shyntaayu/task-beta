@@ -1,6 +1,9 @@
 <template>
   <div class="py-4">
-    <div class="container">
+    <div v-if="isLoading" class="container text-center">
+      <img src="/loading.gif" />
+    </div>
+    <div class="container" v-else>
       <div
         class="title border-bottom d-flex align-items-center justify-content-between py-2"
       >
@@ -60,29 +63,34 @@
           >Add Task</a
         >
         <div class="add-card" v-else>
-          <div class="card mb-2">
-            <div class="card-body d-flex flex-column p-0">
-              <input
-                class="form-control border-0 mb-2"
-                placeholder="Title"
-                type="text"
-              />
-              <textarea
-                class="form-control border-0 small"
-                placeholder="Description"
-                rows="3"
-              ></textarea>
+          <form v-on:submit.prevent="handleSubmit">
+            <div class="card mb-2">
+              <div class="card-body d-flex flex-column p-0">
+                <input
+                  class="form-control border-0 mb-2"
+                  placeholder="Title"
+                  type="text"
+                  v-model="form.title"
+                  autofocus
+                />
+                <textarea
+                  class="form-control border-0 small"
+                  placeholder="Description"
+                  v-model="form.description"
+                  rows="3"
+                ></textarea>
+              </div>
             </div>
-          </div>
-          <div class="button-wrapper d-flex">
-            <button class="btn btn-primary me-2">Save</button>
-            <button
-              class="btn btn-outline-secondary"
-              @click="isCreating = !isCreating"
-            >
-              Cancel
-            </button>
-          </div>
+            <div class="button-wrapper d-flex">
+              <button class="btn btn-primary me-2">Save</button>
+              <button
+                class="btn btn-outline-secondary"
+                @click="isCreating = !isCreating"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -141,7 +149,14 @@ export default {
       // Tipe layout daftar task
       isGrid: false,
       cat: "Nothing selected",
-      isShow: true,
+      isShow: false,
+      isLoading: true,
+      form: {
+        title: "",
+        description: "",
+        isDone: false,
+        category: "New",
+      },
     };
   },
   computed: {
@@ -171,7 +186,18 @@ export default {
       return a;
     },
   },
-  methods: {},
+  methods: {
+    handleSubmit() {
+      console.log(this.form);
+      this.tasks.push(this.form);
+      this.isCreating = false;
+    },
+  },
+  mounted() {
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 3000);
+  },
 };
 </script>
 
