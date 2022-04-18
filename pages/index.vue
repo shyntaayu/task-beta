@@ -22,6 +22,18 @@
           <button class="btn btn-danger me-2" @click="isShow = !isShow">
             {{ !isShow ? "Show" : "Hide" }}
           </button>
+
+          <button
+            class="btn btn-outline-primary py-1 px-3 me-4"
+            @click="shuffle"
+          >
+            Shuffle!
+          </button>
+
+          <button class="btn btn-success me-4" @click="sortMe">
+            Sort {{ isAsc ? "Asc" : "Desc" }}
+          </button>
+
           <!-- /* Form input pencarian */ -->
           <input
             type="text"
@@ -42,15 +54,15 @@
         </div>
       </div>
 
-      <div class="list-task row">
+      <transition-group name="tasks" tag="div" class="list-task row">
         <CardItem
           v-for="(item, i) in resultQuery"
-          :key="i"
+          :key="item.id"
           :task="item"
           :isGrid="isGrid"
           :isShow="isShow"
         />
-      </div>
+      </transition-group>
 
       <div class="action py-2">
         <!-- /* Jika isCreating == false maka tombol Add Task tidak akan tampil */
@@ -108,37 +120,57 @@ export default {
       searchQuery: "",
       tasks: [
         {
+          id: 1,
           title: "Task 1",
           description: "ini deskripsi task 1",
           isDone: false,
           category: "Daily",
         },
         {
+          id: 2,
           title: "Task 2",
           description: "ini deskripsi 2",
           isDone: false,
           category: "BiWeekly",
         },
         {
+          id: 3,
           title: "Task 3",
           description: " ini deskripsi 3",
           isDone: false,
           category: "Daily",
         },
         {
+          id: 4,
           title: "Task 4",
           description: "ini deskripsi task 4",
           isDone: false,
           category: "BiWeekly",
         },
         {
+          id: 5,
           title: "Task 5",
           description: "ini deskripsi 5",
           isDone: false,
           category: "Weekly",
         },
         {
+          id: 6,
           title: "Task 6",
+          description: " ini deskripsi 6",
+          isDone: false,
+          category: "Daily",
+        },
+        {
+          id: 7,
+          title: "ada",
+          description: " ini deskripsi 6",
+          isDone: false,
+          category: "Daily",
+        },
+        {
+          id: 8,
+          title: "xyz",
           description: " ini deskripsi 6",
           isDone: false,
           category: "Daily",
@@ -157,6 +189,7 @@ export default {
         isDone: false,
         category: "New",
       },
+      isAsc: true,
     };
   },
   computed: {
@@ -192,11 +225,29 @@ export default {
       this.tasks.push(this.form);
       this.isCreating = false;
     },
+    shuffle() {
+      this.tasks = _.shuffle(this.tasks);
+    },
+    sortMe() {
+      if (this.isAsc) {
+        this.tasks = this.tasks.sort((a, b) => (a.title > b.title ? 1 : -1));
+      } else {
+        this.tasks = this.tasks.sort((a, b) => (a.title > b.title ? -1 : 1));
+      }
+      this.isAsc = !this.isAsc;
+    },
   },
   mounted() {
     setTimeout(() => {
       this.isLoading = false;
-    }, 3000);
+    }, 1000);
+  },
+  created() {
+    // if (localStorage.getItem("task-me") != undefined)
+    //   this.tasks = localStorage.getItem("task-me");
+  },
+  updated() {
+    // localStorage.setItem("task-me", this.tasks);
   },
 };
 </script>
@@ -204,5 +255,8 @@ export default {
 <style>
 .red {
   color: blue;
+}
+.tasks-move {
+  transition: 0.4s;
 }
 </style>

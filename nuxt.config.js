@@ -1,3 +1,4 @@
+import webpack from "webpack";
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -42,7 +43,14 @@ export default {
   modules: ["@nuxtjs/axios", "@nuxtjs/pwa", "bootstrap-vue/nuxt"],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    plugins: [
+      new webpack.ProvidePlugin({
+        // global modules
+        _: "lodash",
+      }),
+    ],
+  },
 
   pwa: {
     meta: "My PWA",

@@ -13,16 +13,9 @@ export default {
       msg: "text awal",
     };
   },
-  updated() {
-    console.log("updated");
-    console.log(document.getElementById("life").textContent);
-  },
-  beforeUnmount() {
-    console.log("before unmount");
-  },
   beforeCreate() {
     console.log("before create");
-    console.log(document.getElementById("life"));
+    // console.log(document.getElementById("life"));
   },
   created() {
     console.log("created");
@@ -40,6 +33,13 @@ export default {
   beforeUpdate() {
     console.log("before update");
     console.log(document.getElementById("life").textContent);
+  },
+  updated() {
+    console.log("updated");
+    console.log(document.getElementById("life").textContent);
+  },
+  beforeUnmount() {
+    console.log("before unmount");
   },
   unMounted() {
     console.log("unmounted");
